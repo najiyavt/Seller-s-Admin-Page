@@ -1,11 +1,21 @@
-h2{
-    text-align: center;
+h2,h1{
     text-decoration: underline;
-    text-overflow: ellipsis;
-    text-shadow: #f5f5f5;
-    color: brown;
-    font-size: 40px;
+    background-color: rgb(239, 231, 231);
+    margin-top: 20px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS';
+    font-size: 35px;
 }
+
+#h1{
+   font-family: fantasy; 
+   text-align: center;
+   text-decoration: underline;
+   background-color: black;
+   color: white;
+   padding: 30px 30px 30px 0;
+   pa
+}
+
 table{
     width: 100%;
     border-collapse: collapse;
@@ -24,4 +34,21 @@ tr:hover{
 }
 button{
     border-radius: 5px;;
+}
+ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+li{
+    margin-bottom: 10px;
+}
+input{
+    border-radius: 5px;
+    size: 20px
+}
+label{
+    font-size: 20px;
+   
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }

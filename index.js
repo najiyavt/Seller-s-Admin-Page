@@ -1,61 +1,66 @@
-function handleFormSubmit(event){
-  event.preventDefault();
-  const productDetails = {
-      price: event.target.price.value,
-      name: event.target.name.value,
-      type: event.target.type.value,
-  };
+const us = document.getElementById('skin');
+const uf = document.getElementById('food');
+const ue = document.getElementById('elec');
 
-  axios
-    .post("https://crudcrud.com/api/ac4af9dc51d74f6cb79b2f848e4293ad/products", productDetails)
-    .then((response) => {
-      getDataFromServer();
-    })
-    .catch((error) => console.log(error));
+function handleFormSubmit(event){
+
+    event.preventDefault();
+
+    const productDetails = {
+       price: event.target.price.value,
+       name: event.target.name.value,
+       type: event.target.type.value,
+    }
+    axios
+       .post("https://crudcrud.com/api/d95d5ffbc97846b58d64ba6b70f96bc3/products", productDetails)
+       .then((res) => {
+        getDataFromServer();
+       })
+       .catch((error) => console.log(error));
 }
 
 function getDataFromServer(){
-  axios
-    .get("https://crudcrud.com/api/ac4af9dc51d74f6cb79b2f848e4293ad/products")
-    .then((response) => {
-      showOnScreen(response.data);
-    })
-    .catch((error) => console.log(error));
+    axios
+       .get("https://crudcrud.com/api/d95d5ffbc97846b58d64ba6b70f96bc3/products")
+       .then((res) => {
+        showOnScreen(res.data);
+       })
+       .catch((error) => console.log(error));
 }
 
-function showOnScreen(products){
-  const tbody = document.getElementById('tbody');
-  tbody.innerHTML = '';
+function showOnScreen(user) {
+    
+  ue.innerHTML = '';
+  uf.innerHTML = '';
+  us.innerHTML = '';
 
-  products.forEach((product) => {
-      const tr = document.createElement('tr');
-      const td = document.createElement('td');
-      td.textContent = `${product.price} - ${product.type} - ${product.name}`;
-
-      if (product.type === 'Electronics') {
-        document.getElementById('e').appendChild(tr);
-      } else if (product.type === 'Food') {
-        document.getElementById('f').appendChild(tr);
-      } else if (product.type === 'Skincare') {
-        document.getElementById('s').appendChild(tr);
+  user.forEach((data) => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+      <label>${data.price} -</label> 
+      <label>${data.type} - </label> 
+      <label>${data.name}</label> 
+      <button class='deleteBtn' data-id="${data._id}">Delete</button>
+      `
+      if(data.type === 'Electronics'){
+        ue.appendChild(li);
+      }else if (data.type === 'Food'){
+        uf.appendChild(li);
+      }else{
+        us.appendChild(li)
       }
-
-      const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = 'Delete Order';
-      deleteBtn.classList.add('deleteBtn');
-      deleteBtn.setAttribute('data-id', product._id);
+  })
+  document.querySelectorAll('.deleteBtn').forEach((deleteBtn) => {
       deleteBtn.addEventListener('click', () => {
-          deleteOrder(product._id);
-      });
-
-      td.appendChild(deleteBtn);
-      tr.appendChild(td);
-  });
+         const p = deleteBtn.getAttribute("data-id");
+         deleteProduct(p);
+      })
+    });
 }
-
-function deleteOrder(productId){
+      
+function deleteProduct(productId){
   axios
-    .delete(`https://crudcrud.com/api/ac4af9dc51d74f6cb79b2f848e4293ad/products/${productId}`)
+    .delete(`https://crudcrud.com/api/d95d5ffbc97846b58d64ba6b70f96bc3/products/${productId}`)
     .then(() => {
       getDataFromServer();
     })
